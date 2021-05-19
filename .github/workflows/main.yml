@@ -30,11 +30,11 @@ jobs:
           arguments: -syntax-only
           target: packer.pkr.hcl
         env:
+          PKR_VAR_aws_region: ${{ secrets.AWS_REGION }}
           PKR_VAR_vpc_id: ${{ secrets.VPC_ID }}
           PKR_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.PACKER_IAM_AKID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.PACKER_IAM_SKEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          PKR_VAR_AKID: ${{ secrets.PACKER_IAM_AKID }}
+          PKR_VAR_SKEY: ${{ secrets.PACKER_IAM_SKEY }}
 
       # build artifact
       - name: Build Artifact
@@ -45,8 +45,8 @@ jobs:
           target: packer.pkr.hcl
         env:
           PACKER_LOG: 1
+          PKR_VAR_aws_region: ${{ secrets.AWS_REGION }}
           PKR_VAR_vpc_id: ${{ secrets.VPC_ID }}
           PKR_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.PACKER_IAM_AKID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.PACKER_IAM_SKEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          PKR_VAR_AKID: ${{ secrets.PACKER_IAM_AKID }}
+          PKR_VAR_SKEY: ${{ secrets.PACKER_IAM_SKEY }}
