@@ -27,6 +27,12 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: fix
+        env:
+          PKR_VAR_aws_region: ${{ secrets.AWS_REGION }}
+          PKR_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          PKR_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
+          PKR_VAR_AKID: ${{ secrets.PACKER_IAM_AKID }}
+          PKR_VAR_aws_region: ${{ secrets.PACKER_IAM_SKEY }}
 
       # validate templates
       - name: Validate Template
@@ -34,7 +40,13 @@ jobs:
         with:
           command: validate
           arguments: -syntax-only
-          target: packer.pkr.hcl
+          target: ../../packer.pkr.hcl
+        env:
+          PKR_VAR_aws_region: ${{ secrets.AWS_REGION }}
+          PKR_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          PKR_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
+          PKR_VAR_AKID: ${{ secrets.PACKER_IAM_AKID }}
+          PKR_VAR_aws_region: ${{ secrets.PACKER_IAM_SKEY }}
 
       # build artifact
       - name: Build Artifact
@@ -42,6 +54,11 @@ jobs:
         with:
           command: build
           arguments: "-color=false -on-error=abort"
-          target: packer.pkr.hcl
+          target: ../../packer.pkr.hcl
         env:
           PACKER_LOG: 1
+          PKR_VAR_aws_region: ${{ secrets.AWS_REGION }}
+          PKR_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          PKR_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
+          PKR_VAR_AKID: ${{ secrets.PACKER_IAM_AKID }}
+          PKR_VAR_aws_region: ${{ secrets.PACKER_IAM_SKEY }}
